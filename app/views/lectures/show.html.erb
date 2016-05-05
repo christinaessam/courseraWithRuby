@@ -1,0 +1,68 @@
+
+<% if notice%>
+<p id="notice"><%= notice %></p>
+<%end%>
+
+<div class="jumbotron" style="background:url(/images/Courses.jpg); height: 300px; background-size: 100%;">
+  <h1><%= @lecture.title %></h1>
+</div>
+
+<div class="container">
+<h1 align="right" style="color: #FF6666;">BY : <%= @lecture.user.name%></h1>
+<div class="d" style="background-color: #FFFF99	;">
+  <%=raw @lecture.content %>
+</div>
+
+<p>
+  <h2 style="color: #FF6666;">this file would help:</h2>
+  <a class="btn btn-default" href="<%= @lecture.attachment_url %>" download><span class="glyphicon glyphicon-download"></span>Download Attachment</a>
+</p>
+
+
+  <%= link_to 'Edit', edit_lecture_path(@lecture),class:"btn btn-warning" %> |
+  <%= link_to 'Back', lectures_path ,class:"btn btn-primary" %>
+
+  <!--this part for like-->
+
+    <div class="text-align:center;" align="right">
+      <%= link_to like_lecture_path(@lecture), class:"like" , method: :put do %>
+          <button type="button" class="btn btn-info" aria-label="Left Align">
+
+            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center " aria-hidden="true"> </span>
+            <span class="bage"><%= @lecture.get_likes.size %></span>
+          </button>
+      <% end  %>
+
+
+      <%= link_to unlike_lecture_path(@lecture), class:"like" , method: :put do %>
+          <button type="button" class="btn btn-info" aria-label="Left Align">
+
+            <span class="glyphicon glyphicon-thumbs-down glyphicon-align-center " aria-hidden="true"> </span>
+            <span class="bage"><%= @lecture.get_dislikes.size %></span>
+          </button>
+
+      <% end  %>
+
+    </div>
+
+
+</div>
+<h3>Comments</h3>
+<div style="background:#CC6666; height: 10px;">
+</div>
+<div style=" height: 10px;">
+</div>
+<!--this part for the comment -->
+<div class="container-fluid">
+    <div id="comments">
+      <%= render :partial => @lecture.comments %>
+    </div>
+    <%= simple_form_for [@lecture ,Comment.new] do |f| %>
+    <p>
+      <%= f.input :content , :lable => "NEW COMMENT" , as: :text , input_html: { row:"3" } %>
+    </p>
+    <div class="btn">
+      <%= f.submit "Add Comment " , class:'btn btn-primary'  %>
+    </div>
+</div>
+<% end %>

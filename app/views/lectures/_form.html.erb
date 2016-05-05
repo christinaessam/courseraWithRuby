@@ -1,0 +1,33 @@
+<%= form_for(@lecture) do |f| %>
+  <% if @lecture.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
+
+      <ul>
+      <% @lecture.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.cktext_area :content %>
+  </div>
+  <div class="field">
+    <%= f.label :attachment %><br>
+    <%= f.file_field :attachment %>
+  </div>
+  </div>
+  <div class="field">
+    <%= f.collection_select :course_id, current_user.courses,:id,:title %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

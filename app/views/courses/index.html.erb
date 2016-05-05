@@ -1,0 +1,60 @@
+<head>
+  <style type="text/css">
+
+    .featurette {
+      overflow: hidden;
+    }
+
+    .featurette-image.pull-left {
+      margin-right: 40px;
+      width: 300px;
+      height: 300px;
+    }
+
+    .featurette-image.pull-right {
+      margin-left: 40px;
+      width: 300px;
+      height: 300px;
+    }
+
+    .featurette-heading {
+      font-size: 50px;
+    }
+  </style>
+  </head>
+<div class="jumbotron" style="background:url(/images/Courses.jpg); height: 300px; background-size: 100%;">
+  <h1>Courses</h1>
+</div>
+<div class="container-fluid">
+<table class="table table-hover">
+
+
+  <tbody>
+  <% i=0 %>
+  <% @courses.each do |course| %>
+  <div class="featurette" id="about">
+    <%if i%2==0 %>
+      <img class="featurette-image img-circle img-responsive pull-right" src="<%= course.image %>">
+    <%else%>
+        <img class="featurette-image img-circle img-responsive pull-left" src="<%= course.image %>">
+    <%end%>
+        <h2 class="featurette-heading"><%= course.title %>
+      <span class="text-muted">Created by : <%= course.user.name %> </span>
+    </h2>
+    <p class="lead"><%= course.describtion %></p>
+    <%= link_to 'Show', course %>
+    <% if current_user.id == course.user_id  %>
+        <%= link_to 'Edit', edit_course_path(course) %>
+        <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
+  <% i=i+1 %>
+  <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<% if current_user.role=="instractor"%>
+<%= link_to 'New Course', new_course_path , :class => "btn btn-primary"%>
+
+<%end%>

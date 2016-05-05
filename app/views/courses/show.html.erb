@@ -1,0 +1,65 @@
+<!--<style type="text/css">
+  /*.image-bg-fluid-height*/
+   /*{*/
+    /*text-align: center;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /**/
+    /*padding: 100px 0;*/
+    /*max-width: 100%;*/
+  /*}*/
+<!--</style>-->
+<% if notice %>
+<div class="alert alert-success" role="alert">
+  <p id="notice"><%= notice %></p>
+</div>
+<%end%>
+
+<!--<div class="container-full-bg" style="background-image:url('<%= @course.image %>');">
+  <div class="container special">
+    <div class="jumbotron" style="background: none;"></div>
+  </div>
+</div>-->
+<div class="container">
+<p>
+  <h1 style="color: #FF6666 ;"><%= @course.title %></h1>
+</p>
+  <p>
+    <strong>Created By :</strong>
+    <%= @course.user.name %>
+  </p>
+<div class="row container-fluid">
+  <header>
+    <img class="img-responsive " src="<%= @course.image %>" style="width:100%;" >
+  </header>
+</div>
+
+
+<br>
+  <br>
+
+<div class="row container-fluid">
+  <p>
+    <%= @course.describtion %>
+  </p>
+</div>
+
+<p>
+  <strong>Lectures:</strong>
+  <% @course.lectures.each do |lecture|%>
+    <td><%= link_to lecture.title, lecture %></td>
+    <br>
+<% end %>
+</p>
+  <% if current_user.id==@course.user_id%>
+  <%= link_to 'Edit', edit_course_path(@course) %> |
+  <% end %>
+  <%= link_to 'Back', courses_path %>
+</div>
+
+<% if (current_user.id ==  @course.user_id)&&(current_user.role == "instractor") %>
+
+    <%= link_to 'New Lecture', new_lecture_path , :class => "btn btn-primary"%>
+<%end%>

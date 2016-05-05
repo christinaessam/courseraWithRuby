@@ -1,0 +1,39 @@
+<div class="jumbotron" style="background:url(/images/Courses.jpg);">
+  <h1>Lectures</h1>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Attachment</th>
+      <th>User</th>
+      <th>Course</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lectures.each do |lecture| %>
+      <tr>
+        <td><%= lecture.title %></td>
+        <td><%=raw lecture.content %></td>
+        <td><a href="<%= lecture.attachment_url %>" download>Download Attachment</a></td>
+        <td><%= lecture.user.name %></td>
+        <td><%= lecture.course.title %></td>
+        <td><%= link_to 'Show', lecture %></td>
+        <td><%= link_to 'Edit', edit_lecture_path(lecture) %></td>
+        <td><%= link_to 'Destroy', lecture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if (current_user.id ==  @course.user_id)&&(current_user.role == "instractor") %>
+
+<%= link_to 'New Lecture', new_lecture_path , :class => "btn btn-primary"%>
+<%end%>
